@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import random
+from pathlib import Path
 
 # Define tenure type factors
 tenure_type_factor = {
@@ -64,7 +65,8 @@ def calculate_new_price(effective_date, tenure_type, holding_type, base_price):
         return None
 
 # Load and merge datasets
-datasets = ["dataset_2021.csv", "dataset_2016.csv", "dataset_2023.csv"]
+# datasets = ["dataset/dataset_2021.csv", "dataset/dataset_2016.csv", "dataset/dataset_2023.csv"]
+datasets = [str(Path("dataset") / f"dataset_{year}.csv") for year in [2021, 2016, 2023]]
 merged_df = pd.concat([pd.read_csv(file) for file in datasets]).drop_duplicates(subset=["Property ID"]).reset_index(drop=True)
 
 # Apply transformations and add new columns to the merged dataset
