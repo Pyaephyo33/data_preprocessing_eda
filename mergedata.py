@@ -46,8 +46,12 @@ def generate_property_history(effective_date):
     return ", ".join(map(str, years))
 
 # Function to assign base price based on building size
+# Function to assign base price ensuring minimum value
 def assign_price(building_size):
-    return round(building_size * random.uniform(10, 50), 2) if pd.notnull(building_size) else None
+    if pd.isnull(building_size):
+        return None
+    return max(round(building_size * random.uniform(150, 500), 2), 291200)
+
 
 # Function to calculate new price considering effective date, property type, and price adjustment
 def calculate_new_price(effective_date, tenure_type, holding_type, base_price):
